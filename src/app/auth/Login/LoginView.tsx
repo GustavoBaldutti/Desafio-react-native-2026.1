@@ -14,7 +14,6 @@ import { styles } from "./styles";
 export function LoginView() {
   return (
     <View style={styles.container}>
-      <AntDesign name="left-square" size={24} color="#4B2E60" />
       <View style={styles.boxTop}>
         <Image source={Logo} style={styles.logo} resizeMode="contain" />
         <Text style={styles.Text}> Iniciar Sessão </Text>
