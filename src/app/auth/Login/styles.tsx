@@ -1,89 +1,88 @@
-import { Dimensions, StyleSheet } from "react-native";
-import { width } from "../../../constants/Dimensions";
+import { StyleSheet, Dimensions } from "react-native";
+const { width } = Dimensions.get("window");
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#000",
-    paddingTop: 50,
+    alignItems: "center", // Garante que tudo fique centralizado horizontalmente
+    justifyContent: "center", // Centraliza o conteúdo verticalmente na tela
+  },
+
+  backButton: {
+    position: "absolute",
+    top: 60,
+    left: 20,
+    zIndex: 10,
   },
 
   boxTop: {
-    paddingTop: 100,
-    height: Dimensions.get("window").height / 2,
-    width: "100%",
-
     alignItems: "center",
-    justifyContent: "center",
-  },
-
-  boxButtom: {
-    height: Dimensions.get("window").height / 2,
-    width: "100%",
-    alignItems: "center",
-    justifyContent: "center",
+    marginBottom: 40, // Cria um espaço entre o título e os inputs
   },
 
   logo: {
-    paddingTop: 100,
-    width: 440,
-    height: 300,
+    width: 250, // Diminuí o tamanho para caber perfeitamente na tela
+    height: 250,
   },
 
   Text: {
-    fontWeight: "bold",
-    marginTop: 40,
-    fontSize: 25,
+    fontWeight: "900", // Mais grosso, parecido com a imagem
+    marginTop: 20,
+    fontSize: 26,
     color: "#4B2E60",
-    paddingBottom: 100,
+    textTransform: "uppercase", // Garante que fique tudo maiúsculo
+  },
+
+  inputsContainer: {
+    width: width * 0.8, // Os inputs vão ocupar 80% da tela
+    marginBottom: 40, // Espaço entre os inputs e o botão de login
+  },
+
+  boxInput: {
+    width: "100%",
+    height: 50,
+    flexDirection: "row",
+    alignItems: "flex-end", // Alinha o texto na base da linha
+    borderBottomWidth: 1,
+    borderBottomColor: "#FFFFFF",
+    marginBottom: 30, // Espaçamento entre o email e a senha
+    paddingBottom: 8,
   },
 
   titleInput: {
     color: "#4B2E60",
-    marginTop: 20,
-    fontFamily: "Fontes",
+    fontWeight: "bold",
+    fontSize: 14,
+    marginRight: 10, // Dá um espaço entre a palavra "EMAIL" e a linha de digitar
+    // fontFamily: "Fontes", // Descomente se sua fonte estiver carregando direitinho
   },
 
-  boxInput: {
-    width: width * 0.9,
-    height: 60,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    borderBottomWidth: 1,
-    borderBottomColor: "#FFFFFF",
-  },
   input: {
-    alignSelf: "flex-end",
-    paddingBottom: 10,
-    height: "50%",
-    width: "70%",
-    maxWidth: "70%",
+    flex: 1, // Faz a área de digitação ocupar o resto da linha
     color: "#FFFFFF",
+    fontSize: 16,
+    height: 30,
+  },
+
+  boxButtom: {
+    width: "100%",
+    alignItems: "center",
   },
 
   button: {
-    //caixa de login
-    width: "60%",
+    width: "80%", // Mesma largura dos inputs para ficar harmonioso
     borderRadius: 16,
-    height: 40,
+    height: 55, // Um pouco mais alto para ficar igual à imagem
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#4B2E60",
   },
 
   textbutton: {
-    // texto do botão login
     color: "#FFFFFF",
-    fontSize: 16,
+    fontSize: 20,
     fontWeight: "bold",
-    fontFamily: "Fontes",
-  },
-  backButton: {
-    position: "absolute",
-    top: 60,
-    left: 20,
-    zIndex: 10, 
-    borderRadius: 16,
+    // fontFamily: "Fontes",
   },
 });
