@@ -1,4 +1,4 @@
-import { LoginView } from "./auth/Login/LoginView";
+import { Navbar } from "./Navbar/Navbar";
 export default function SplashScreen() {
-  return <LoginView />;
+  return <Navbar />;
 }
