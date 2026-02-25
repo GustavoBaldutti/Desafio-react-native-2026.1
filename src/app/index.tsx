@@ -1,4 +1,4 @@
-import  ContatosView  from "./tabs/Contatos/ContatosView";
+import { LoginView } from "./auth/Login/LoginView";
 export default function SplashScreen() {
-  return <ContatosView />;
+  return <LoginView />;
 }

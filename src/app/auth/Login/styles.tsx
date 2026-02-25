@@ -5,7 +5,7 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#000",
-    alignItems: "center",
+    paddingTop: 50,
   },
 
   boxTop: {
@@ -63,6 +63,7 @@ export const styles = StyleSheet.create({
   },
 
   button: {
+    //caixa de login
     width: "60%",
     borderRadius: 16,
     height: 40,
@@ -72,11 +73,17 @@ export const styles = StyleSheet.create({
   },
 
   textbutton: {
+    // texto do botão login
     color: "#FFFFFF",
     fontSize: 16,
     fontWeight: "bold",
     fontFamily: "Fontes",
   },
-
-  
+  backButton: {
+    position: "absolute",
+    top: 60,
+    left: 20,
+    zIndex: 10, 
+    borderRadius: 16,
+  },
 });
