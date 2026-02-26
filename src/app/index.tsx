@@ -1,4 +1,13 @@
-import { Navbar } from "./Navbar/Navbar";
+import { useState } from 'react';
+import { Menu } from "./pagInicial/menu";
+
 export default function SplashScreen() {
-  return <Navbar />;
+  const [menuVisible, setMenuVisible] = useState(true);
+
+  return (
+    <Menu 
+      visible={menuVisible} 
+      onClose={() => setMenuVisible(false)} 
+    />
+  );
 }
