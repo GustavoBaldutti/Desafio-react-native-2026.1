@@ -13,7 +13,7 @@ export const stylesD = StyleSheet.create({
     marginHorizontal: 30, 
   },
   imageWrapper: {
-    backgroundColor: "#FFF",
+    backgroundColor: "#ffffff",
     width: "100%",
     height: 280, 
     borderRadius: 15,
