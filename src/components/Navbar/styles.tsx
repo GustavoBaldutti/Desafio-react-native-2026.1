@@ -5,7 +5,7 @@ export const styles = StyleSheet.create({
     backgroundColor: "#A9A9A9",
   },
   header: {
-    backgroundColor: "#000",
+    backgroundColor: "#000000",
     height: 80,
     flexDirection: "row",
     alignItems: "center",
@@ -18,16 +18,7 @@ export const styles = StyleSheet.create({
     height: 50,
     borderRadius: 20,
   },
-  sectionTitle: {
-    fontSize: 22,
-    fontWeight: "900",
-    color: "#000",
-    textAlign: "center",
-    marginTop: 30,
-    marginBottom: 15,
-    textTransform: "uppercase",
-    fontFamily: "Fontes",
-  },
+
   footer: {
     backgroundColor: "#000",
     paddingVertical: 30,
@@ -38,6 +29,5 @@ export const styles = StyleSheet.create({
     color: "#FFF",
     fontSize: 20,
     fontWeight: "900",
-    fontFamily: "Fontes",
   },
 });

@@ -1,26 +1,36 @@
+import { useAuth } from "@/src/hooks/useAuth";
 import { Feather } from "@expo/vector-icons";
-import React, { useState } from "react";
-import { Image, TouchableOpacity, View } from "react-native";
-import { styles } from "./styles";
+import React from "react";
+import { Image, Text, TouchableOpacity, View } from "react-native";
 import { Menu } from "../Menu";
+import { styles } from "./styles";
+import { router } from "expo-router";
 
-export function Navbar() {
-  const [menuVisible, setMenuVisible] = useState(false);
+type navbarProps={
+  visible:boolean
+}
+
+export function Navbar(data: navbarProps) {
+  const { logout } = useAuth();
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => setMenuVisible(true)}>
-          <Menu visible={menuVisible} onClose={() => setMenuVisible(false)} />
+        <Menu onClose={() => { }} />
+        <TouchableOpacity onPress={() => router.push("/")}>
+          <Image
+            source={require("../../assets/images/Logo.png")}
+            style={styles.logoHeader}
+          />
         </TouchableOpacity>
 
-        <Image
-          source={require("../../assets/images/Logo.png")}
-          style={styles.logoHeader}
-        />
-
-        <TouchableOpacity>
-          <Feather name="log-in" size={24} color="#4B2E60" />
-        </TouchableOpacity>
+        {data.visible ? (
+          <TouchableOpacity onPress={logout}>
+            <Feather name="log-in" size={24} color="#4B2E60" />
+          </TouchableOpacity>
+        ):(
+          <View style={{width:24}}> 
+          </View>
+        )}
       </View>
     </View>
   );
