@@ -9,6 +9,8 @@ import {
   TouchableWithoutFeedback,
 } from "react-native";
 import { styles } from "./styles";
+import { LogOut } from "lucide-react-native";
+import { useAuth } from "@/src/hooks/useAuth";
 
 interface MenuProps {
   onClose?: () => void;
@@ -21,6 +23,7 @@ export const Menu = ({ onClose }: MenuProps) => {
     setMenuVisible(false);
     if (onClose) onClose();
   };
+  const {logout} = useAuth();
 
   return (
     <View>
@@ -65,7 +68,7 @@ export const Menu = ({ onClose }: MenuProps) => {
                 style={[styles.menuItem, styles.lastItem]}
                 onPress={() => {
                   fecharMenu();
-                  router.replace("/login" as Href);
+                  logout();
                 }}
               >
                 <Text style={styles.menuText}>Logout</Text>

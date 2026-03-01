@@ -4,7 +4,7 @@ export const styles = StyleSheet.create({
   overlay: {
     flex: 1,
     justifyContent: "flex-start",
-    paddingTop: 70,
+    paddingTop: 75,
   },
   menuContainer: {
     backgroundColor: "#000000",
