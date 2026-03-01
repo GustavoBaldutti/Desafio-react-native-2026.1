@@ -1,16 +1,15 @@
+import Footer from "@/src/components/Footer";
+import { Navbar } from "@/src/components/Navbar";
 import {
-  ArrowLeft,
   Facebook,
   Instagram,
   Mail,
   MapPin,
-  Menu,
   Music2,
   Phone,
 } from "lucide-react-native";
 import React from "react";
 import {
-  Image,
   SafeAreaView,
   ScrollView,
   Text,
@@ -34,22 +33,7 @@ const ContactItem = ({ Icon, title, content }: any) => (
 export default function ContatosView() {
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity>
-          <Menu color="#4B2E60" size={28} />
-        </TouchableOpacity>
-
-        <View style={styles.logo}>
-          <Image
-            source={require("../../assets/images/Logo.png")}
-            style={styles.logoImage}
-            resizeMode="contain"
-          />
-        </View>
-        <TouchableOpacity style={styles.backButton}>
-          <ArrowLeft color="#000" size={20} />
-        </TouchableOpacity>
-      </View>
+      <Navbar visible={false} />
 
       <ScrollView contentContainerStyle={styles.content}>
         <Text style={styles.title}>CONTATO</Text>
@@ -89,6 +73,7 @@ export default function ContatosView() {
           </TouchableOpacity>
         </View>
       </ScrollView>
+      <Footer />
     </SafeAreaView>
   );
 }
