@@ -1,29 +1,29 @@
+import { useAuth } from "@/src/hooks/useAuth";
 import { Feather } from "@expo/vector-icons";
-import { router, Href } from "expo-router";
+import { Href, router } from "expo-router";
 import React, { useState } from "react";
 import {
   Modal,
   Text,
   TouchableOpacity,
-  View,
   TouchableWithoutFeedback,
+  View,
 } from "react-native";
 import { styles } from "./styles";
-import { LogOut } from "lucide-react-native";
-import { useAuth } from "@/src/hooks/useAuth";
 
 interface MenuProps {
   onClose?: () => void;
+  menuPaddingTop?: number;
 }
 
-export const Menu = ({ onClose }: MenuProps) => {
+export const Menu = ({ onClose, menuPaddingTop = 75 }: MenuProps) => {
   const [menuVisible, setMenuVisible] = useState(false);
 
   const fecharMenu = () => {
     setMenuVisible(false);
     if (onClose) onClose();
   };
-  const {logout} = useAuth();
+  const { logout } = useAuth();
 
   return (
     <View>
@@ -38,7 +38,7 @@ export const Menu = ({ onClose }: MenuProps) => {
         onRequestClose={fecharMenu}
       >
         <TouchableOpacity
-          style={styles.overlay}
+          style={[styles.overlay, { paddingTop: menuPaddingTop }]}
           activeOpacity={1}
           onPress={fecharMenu}
         >
