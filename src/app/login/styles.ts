@@ -5,8 +5,8 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#000",
-    alignItems: "center", // Garante que tudo fique centralizado horizontalmente
-    justifyContent: "center", // Centraliza o conteúdo verticalmente na tela
+    alignItems: "center",
+    justifyContent: "center",
   },
 
   backButton: {
@@ -18,35 +18,35 @@ export const styles = StyleSheet.create({
 
   boxTop: {
     alignItems: "center",
-    marginBottom: 40, // Cria um espaço entre o título e os inputs
+    marginBottom: 40,
   },
 
   logo: {
-    width: 250, // Diminuí o tamanho para caber perfeitamente na tela
+    width: 250,
     height: 250,
   },
 
   Text: {
-    fontWeight: "900", // Mais grosso, parecido com a imagem
+    fontWeight: "900",
     marginTop: 20,
     fontSize: 26,
     color: "#4B2E60",
-    textTransform: "uppercase", // Garante que fique tudo maiúsculo
+    textTransform: "uppercase",
   },
 
   inputsContainer: {
-    width: width * 0.8, // Os inputs vão ocupar 80% da tela
-    marginBottom: 40, // Espaço entre os inputs e o botão de login
+    width: width * 0.8,
+    marginBottom: 40,
   },
 
   boxInput: {
     width: "100%",
     height: 50,
     flexDirection: "row",
-    alignItems: "flex-end", // Alinha o texto na base da linha
+    alignItems: "flex-end",
     borderBottomWidth: 1,
     borderBottomColor: "#FFFFFF",
-    marginBottom: 30, // Espaçamento entre o email e a senha
+    marginBottom: 30,
     paddingBottom: 8,
   },
 
@@ -54,12 +54,11 @@ export const styles = StyleSheet.create({
     color: "#4B2E60",
     fontWeight: "bold",
     fontSize: 14,
-    marginRight: 10, // Dá um espaço entre a palavra "EMAIL" e a linha de digitar
-    // fontFamily: "Fontes", // Descomente se sua fonte estiver carregando direitinho
+    marginRight: 10,
   },
 
   input: {
-    flex: 1, // Faz a área de digitação ocupar o resto da linha
+    flex: 1,
     color: "#FFFFFF",
     fontSize: 16,
     height: 30,
@@ -71,9 +70,9 @@ export const styles = StyleSheet.create({
   },
 
   button: {
-    width: "80%", // Mesma largura dos inputs para ficar harmonioso
+    width: "80%",
     borderRadius: 16,
-    height: 55, // Um pouco mais alto para ficar igual à imagem
+    height: 55,
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#4B2E60",
@@ -83,6 +82,5 @@ export const styles = StyleSheet.create({
     color: "#FFFFFF",
     fontSize: 20,
     fontWeight: "bold",
-    // fontFamily: "Fontes",
   },
 });
