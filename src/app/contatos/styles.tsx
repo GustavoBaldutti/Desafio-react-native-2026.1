@@ -1,37 +1,9 @@
-import { Platform, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#8e8e8e",
-  },
-  header: {
-    backgroundColor: "#000",
-    height: 60,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingHorizontal: 20,
-    paddingTop: Platform.OS === "android" ? 10 : 0,
-  },
-  logoPlaceholder: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    borderWidth: 2,
-    borderColor: "#4B2E60",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  logoText: {
-    color: "#fff",
-    fontSize: 10,
-    fontWeight: "bold",
-  },
-  backButton: {
-    backgroundColor: "#4B2E60",
-    padding: 4,
-    borderRadius: 4,
   },
   content: {
     alignItems: "center",
@@ -45,7 +17,8 @@ export const styles = StyleSheet.create({
     marginBottom: 30,
     fontFamily: "Fontes",
   },
-  description: { //descrição do contato
+  description: {
+    //descrição do contato
     textAlign: "center",
     fontSize: 12,
     fontWeight: "bold",
@@ -67,7 +40,8 @@ export const styles = StyleSheet.create({
     padding: 20,
     width: "100%",
   },
-  iconCircle: { //circulo para os icones
+  iconCircle: {
+    //circulo para os icones
     width: 45,
     height: 45,
     borderRadius: 22.5,

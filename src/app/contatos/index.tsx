@@ -33,7 +33,7 @@ const ContactItem = ({ Icon, title, content }: any) => (
 export default function ContatosView() {
   return (
     <SafeAreaView style={styles.container}>
-      <Navbar visible={false} />
+      <Navbar visible={false} menuPaddingTop={120} />
 
       <ScrollView contentContainerStyle={styles.content}>
         <Text style={styles.title}>CONTATO</Text>
