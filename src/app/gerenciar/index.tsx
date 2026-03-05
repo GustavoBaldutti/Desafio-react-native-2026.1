@@ -1,13 +1,38 @@
-import { skates } from "@/src/data/data";
 import { Feather } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
-import React from "react";
+import React, { useState } from "react";
 import { FlatList, Image, Text, TouchableOpacity, View } from "react-native";
 import { styles } from "./styles";
 import { Navbar } from "@/src/components/Navbar";
 import Footer from "@/src/components/Footer";
+import api from "@/src/services/api";
+
+
+type Props = {
+  id: number;
+  title: string;
+  description: string;
+  price: number;
+  type: string;
+  image: string;
+  isFeatured: boolean;
+  created_at: string;
+  updated_at: string;
+};
 
 export default function Gerenciar() {
+
+   const [datas, setDatas] = useState<Props[]>([]);
+
+  async function fetchDatas() {
+    try {
+      const response = await api.get("/baldutti/categories");
+      setDatas(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.error("ERRO AO BUSCAR DADOS!!: ", error);
+    }
+  }
   const router = useRouter();
 
   const renderItem = ({ item }: any) => (
@@ -47,7 +72,7 @@ export default function Gerenciar() {
       <Navbar visible={false} />
       <View style={styles.container}>
         <FlatList
-          data={skates}
+          data={datas}
           keyExtractor={(item) => item.id.toString()}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={styles.listContainer}
@@ -67,7 +92,7 @@ export default function Gerenciar() {
           renderItem={renderItem}
         />
       </View>
-      <Footer/>
+      <Footer />
     </View>
   );
 }

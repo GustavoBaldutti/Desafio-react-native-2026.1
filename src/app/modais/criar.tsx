@@ -11,32 +11,53 @@ import {
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
-import * as ImagePicker from "expo-image-picker"; 
+import * as ImagePicker from "expo-image-picker";
 import { stylesC } from "./stylesC";
+import api from "@/src/services/api";
+
+type Props = {
+  id: number;
+  title: string;
+  description: string;
+  price: number;
+  type: string;
+  image: string;
+  isFeatured: boolean;
+  created_at: string;
+  updated_at: string;
+};
 
 export default function Criar() {
+  async function CreatePubli() {
+    try {
+      await api.post("/baldutti/products", {
+        title: nome,
+        description: descricao,
+        price: preco,
+      });
+    } catch (error) {
+      console.error("ERRO AO CRIAR NOVA PUBLICAÇÃO!!: ", error);
+    }
+  }
   const router = useRouter();
 
   const [nome, setNome] = useState("");
   const [descricao, setDescricao] = useState("");
   const [preco, setPreco] = useState("");
+  const [tipo, setTipo] = useState("");
 
-  
   const [imagemSelecionada, setImagemSelecionada] = useState<string | null>(
     null,
   );
 
- 
   const escolherImagem = async () => {
-   
     const resultado = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: "images",
-      allowsEditing: true, 
+      allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
     });
 
- 
     if (!resultado.canceled) {
       setImagemSelecionada(resultado.assets[0].uri);
     }
@@ -71,20 +92,17 @@ export default function Criar() {
       >
         <Text style={stylesC.pageTitle}>Nova publicação</Text>
 
-       
         <TouchableOpacity
           style={stylesC.imagePlaceholder}
           onPress={escolherImagem}
         >
           {imagemSelecionada ? (
-           
             <Image
               source={{ uri: imagemSelecionada }}
               style={{ width: "100%", height: "100%", borderRadius: 8 }}
               resizeMode="cover"
             />
           ) : (
-            
             <Feather name="image" size={50} color="#4B2E60" />
           )}
         </TouchableOpacity>
@@ -117,7 +135,7 @@ export default function Criar() {
           />
         </View>
 
-        <TouchableOpacity style={stylesC.btnCriar}>
+        <TouchableOpacity style={stylesC.btnCriar} onPress={CreatePubli}>
           <Text style={stylesC.btnCriarText}>Criar</Text>
         </TouchableOpacity>
       </ScrollView>

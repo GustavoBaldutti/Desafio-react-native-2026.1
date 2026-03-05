@@ -4,8 +4,8 @@ import { stylesD } from "./styles";
 
 interface DestaqueProps {
   title: string;
-  price: string;
-  imageSource: any;
+  price: number;
+  imageSource: any; //realizar mudança
 }
 
 export function Card({ title, price, imageSource }: DestaqueProps) {
