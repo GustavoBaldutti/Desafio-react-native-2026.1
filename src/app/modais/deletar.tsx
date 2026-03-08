@@ -10,9 +10,10 @@ import {
     TouchableOpacity,
     View,
 } from "react-native";
-import { styles } from "./stylesD";
+
 import { Navbar } from "@/src/components/Navbar";
 import { router } from "expo-router";
+import { styles } from "@/src/styles/deletar";
 
 export default function Deletar() {
   const [confirmacao, setConfirmacao] = useState("");

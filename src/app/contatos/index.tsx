@@ -16,7 +16,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { styles } from "./styles";
+import { styles } from "../../styles/contatos";
 
 const ContactItem = ({ Icon, title, content }: any) => (
   <View style={styles.card}>

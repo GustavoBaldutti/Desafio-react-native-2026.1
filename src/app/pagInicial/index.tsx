@@ -1,10 +1,11 @@
 import Carrossel from "@/src/components/Carrossel";
 import Footer from "@/src/components/Footer";
 import { Navbar } from "@/src/components/Navbar";
-import { Image, ScrollView, Text, View } from "react-native";
-import { styles } from "./styles";
 import api from "@/src/services/api";
-import { useEffect, useState } from "react";
+import { styles } from "@/src/styles/pagInicial";
+import { useFocusEffect } from "@react-navigation/native";
+import { useCallback, useState } from "react";
+import { Image, ScrollView, Text, View } from "react-native";
 
 type Props = {
   id: number;
@@ -23,8 +24,8 @@ export default function Index() {
 
   async function fetchDatas() {
     try {
-      const response = await api.get("/baldutti/categories");
-      setDatas(response.data);
+      const response = await api.get("/baldutti/products");
+      setDatas(response.data.products);
       console.log(response.data);
     } catch (error) {
       console.error("ERRO AO BUSCAR DADOS!!: ", error);
@@ -35,11 +36,13 @@ export default function Index() {
   const rodinhas = datas.filter((roda) => roda.type == "rodas");
   const trucks = datas.filter((truck) => truck.type == "truck");
   const shapes = datas.filter((shape) => shape.type == "shape");
+  console.log("skates", skates);
 
-  useEffect(() => {
-    fetchDatas();
-    console.log("skates:",skates)
-  }, [datas]);
+  useFocusEffect(
+    useCallback(() => {
+      fetchDatas();
+    }, []),
+  );
 
   return (
     <ScrollView style={styles.container}>

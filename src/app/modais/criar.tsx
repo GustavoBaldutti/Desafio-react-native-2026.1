@@ -1,19 +1,20 @@
+import api from "@/src/services/api";
+import { stylesC } from "@/src/styles/criar";
+import { Feather } from "@expo/vector-icons";
+import * as ImagePicker from "expo-image-picker";
+import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
   Image,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from "react-native";
-import { Feather } from "@expo/vector-icons";
-import { useRouter } from "expo-router";
-import * as ImagePicker from "expo-image-picker";
-import { stylesC } from "./stylesC";
-import api from "@/src/services/api";
+import DropDownPicker from "react-native-dropdown-picker";
 
 type Props = {
   id: number;
@@ -28,12 +29,23 @@ type Props = {
 };
 
 export default function Criar() {
+  const [open, setOpen] = useState(false);
+  const [items, setItems] = useState([
+    { label: "Skates", value: "skateMontado" },
+    { label: "Rodinhas", value: "rodinhas" },
+    { label: "Trucks", value: "trucks" },
+    { label: "Shapes", value: "shapes" },
+  ]);
+
   async function CreatePubli() {
     try {
       await api.post("/baldutti/products", {
         title: nome,
         description: descricao,
-        price: preco,
+        price: Number(preco),
+        type: tipo,
+        image: imagemSelecionada,
+        isFeatured: true,
       });
     } catch (error) {
       console.error("ERRO AO CRIAR NOVA PUBLICAÇÃO!!: ", error);
@@ -70,7 +82,7 @@ export default function Criar() {
     >
       <View style={stylesC.header}>
         <TouchableOpacity
-          onPress={() => router.back()}
+          onPress={() => router.push("/gerenciar")}
           style={stylesC.headerIcon}
         >
           <Feather name="arrow-left" size={28} color="#4B2E60" />
@@ -134,6 +146,16 @@ export default function Criar() {
             keyboardType="numeric"
           />
         </View>
+        <DropDownPicker
+          open={open}
+          value={tipo}
+          items={items}
+          setOpen={setOpen}
+          setValue={setTipo}
+          setItems={setItems}
+          placeholder="Selecione o Tipo"
+          style={stylesC.drop}
+        />
 
         <TouchableOpacity style={stylesC.btnCriar} onPress={CreatePubli}>
           <Text style={stylesC.btnCriarText}>Criar</Text>

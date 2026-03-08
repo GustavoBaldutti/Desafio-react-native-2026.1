@@ -2,8 +2,9 @@ import { AntDesign, MaterialIcons } from "@expo/vector-icons";
 import React, { useState } from "react";
 import { Image, Text, TextInput, TouchableOpacity, View } from "react-native";
 import Logo from "../../assets/images/Logo.png";
-import { styles } from "./styles";
+
 import { useAuth } from "@/src/hooks/useAuth";
+import { styles } from "@/src/styles/login";
 
 export default function LoginView() {
   const [showPassword, setShowPassword] = useState(false);

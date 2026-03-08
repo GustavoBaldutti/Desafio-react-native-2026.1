@@ -11,9 +11,24 @@ import {
   Alert,
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
-import { styles } from "./stylesE";
 import { useRouter } from "expo-router";
 import * as ImagePicker from "expo-image-picker";
+import api from "@/src/services/api";
+import { styles } from "@/src/styles/editar";
+
+
+type Props = {
+  id: number;
+  title: string;
+  description: string;
+  price: number;
+  type: string;
+  image: string;
+  isFeatured: boolean;
+  created_at: string;
+  updated_at: string;
+};
+
 
 export default function EditarPublicacao() {
   const router = useRouter();
@@ -125,6 +140,7 @@ export default function EditarPublicacao() {
             <TouchableOpacity style={styles.buttonEdit} onPress={handleEditar}>
               <Text style={styles.textEdit}>Editar</Text>
             </TouchableOpacity>
+            
           </View>
         </View>
       </ScrollView>

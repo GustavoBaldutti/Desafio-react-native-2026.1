@@ -2,10 +2,11 @@ import { Feather } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import { FlatList, Image, Text, TouchableOpacity, View } from "react-native";
-import { styles } from "./styles";
+
 import { Navbar } from "@/src/components/Navbar";
 import Footer from "@/src/components/Footer";
 import api from "@/src/services/api";
+import { styles } from "@/src/styles/gerenciar";
 
 
 type Props = {
