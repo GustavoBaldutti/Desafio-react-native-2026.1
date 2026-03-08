@@ -5,21 +5,24 @@ import { stylesD } from "./styles";
 interface DestaqueProps {
   title: string;
   price: number;
-  imageSource: any; //realizar mudança
+  imageSource: string | number;
 }
 
 export function Card({ title, price, imageSource }: DestaqueProps) {
+  const source =
+    typeof imageSource === "string" ? { uri: imageSource } : imageSource;
+
   return (
     <View style={stylesD.card}>
       <View style={stylesD.imageWrapper}>
         <Image
-          source={imageSource}
+          source={source}
           style={stylesD.productImage}
           resizeMode="contain"
         />
       </View>
       <Text style={stylesD.productTitle}>{title}</Text>
-      <Text style={stylesD.productPrice}>{price}</Text>
+      <Text style={stylesD.productPrice}>R$ {price}</Text>
 
       <TouchableOpacity style={stylesD.buyButton}>
         <Text style={stylesD.buyButtonText}>COMPRAR</Text>
