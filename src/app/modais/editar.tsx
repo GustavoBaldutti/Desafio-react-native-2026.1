@@ -1,65 +1,89 @@
-import React, { useState } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  Image,
-  ScrollView,
-  KeyboardAvoidingView,
-  Platform,
-  Alert,
-} from "react-native";
-import { Feather } from "@expo/vector-icons";
-import { useRouter } from "expo-router";
-import * as ImagePicker from "expo-image-picker";
 import api from "@/src/services/api";
 import { styles } from "@/src/styles/editar";
-
-
-type Props = {
-  id: number;
-  title: string;
-  description: string;
-  price: number;
-  type: string;
-  image: string;
-  isFeatured: boolean;
-  created_at: string;
-  updated_at: string;
-};
-
+import { Feather } from "@expo/vector-icons";
+import { useFocusEffect } from "@react-navigation/native";
+import * as ImagePicker from "expo-image-picker";
+import { useLocalSearchParams, useRouter } from "expo-router";
+import React, { useCallback, useState } from "react";
+import {
+    Alert,
+    Image,
+    KeyboardAvoidingView,
+    Platform,
+    ScrollView,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View,
+} from "react-native";
 
 export default function EditarPublicacao() {
   const router = useRouter();
+  const { id } = useLocalSearchParams<{ id: string }>();
 
-  const [nome, setNome] = useState("Shape CBgang");
-  const [descricao, setDescricao] = useState("Maple");
-  const [preco, setPreco] = useState("300,00");
+  const [nome, setNome] = useState("");
+  const [descricao, setDescricao] = useState("");
+  const [preco, setPreco] = useState("");
+  const [tipo, setTipo] = useState("");
 
   const [imageUri, setImageUri] = useState<string | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+
+  useFocusEffect(
+    useCallback(() => {
+      async function fetchProduct() {
+        try {
+          const response = await api.get(`/baldutti/products/${id}`);
+          const product = response.data.product ?? response.data;
+          setNome(product.title ?? "");
+          setDescricao(product.description ?? "");
+          setPreco(String(product.price ?? ""));
+          setTipo(product.type ?? "");
+          if (product.image) {
+            setImageUri(product.image);
+            setImagePreview(product.image);
+          }
+        } catch (error) {
+          console.error("Erro ao buscar produto:", error);
+        }
+      }
+      if (id) fetchProduct();
+    }, [id]),
+  );
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: "images",
       allowsEditing: true,
       aspect: [3, 4],
-      quality: 1,
+      quality: 0.1,
+      base64: true,
     });
 
     if (!result.canceled) {
-      setImageUri(result.assets[0].uri);
+      setImagePreview(result.assets[0].uri);
+      const base64Image = `data:image/jpeg;base64,${result.assets[0].base64}`;
+      setImageUri(base64Image);
     }
   };
 
-  const handleEditar = () => {
-    Alert.alert("Sucesso!", "Produto editado com sucesso.", [
-      {
-        text: "OK",
-
-        onPress: () => router.replace("/gerenciar"),
-      },
-    ]);
+  const handleEditar = async () => {
+    try {
+      await api.put(`/baldutti/products/${id}`, {
+        title: nome,
+        description: descricao,
+        price: Number(preco),
+        type: tipo,
+        image: imageUri,
+        isFeatured: true,
+      });
+      Alert.alert("Sucesso!", "Produto editado com sucesso.", [
+        { text: "OK", onPress: () => router.replace("/gerenciar") },
+      ]);
+    } catch (error) {
+      console.error("Erro ao editar:", error);
+      Alert.alert("Erro", "Não foi possível editar a publicação.");
+    }
   };
 
   return (
@@ -90,9 +114,9 @@ export default function EditarPublicacao() {
           <Text style={styles.title}>Editar publicação</Text>
 
           <TouchableOpacity style={styles.imagePlaceholder} onPress={pickImage}>
-            {imageUri ? (
+            {imagePreview ? (
               <Image
-                source={{ uri: imageUri }}
+                source={{ uri: imagePreview }}
                 style={{ width: "100%", height: "100%", borderRadius: 8 }}
                 resizeMode="cover"
               />
@@ -140,7 +164,6 @@ export default function EditarPublicacao() {
             <TouchableOpacity style={styles.buttonEdit} onPress={handleEditar}>
               <Text style={styles.textEdit}>Editar</Text>
             </TouchableOpacity>
-            
           </View>
         </View>
       </ScrollView>

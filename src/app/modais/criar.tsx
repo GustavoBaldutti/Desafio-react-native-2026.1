@@ -5,6 +5,7 @@ import * as ImagePicker from "expo-image-picker";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import {
+  Alert,
   Image,
   KeyboardAvoidingView,
   Platform,
@@ -32,23 +33,34 @@ export default function Criar() {
   const [open, setOpen] = useState(false);
   const [items, setItems] = useState([
     { label: "Skates", value: "skateMontado" },
-    { label: "Rodinhas", value: "rodinhas" },
-    { label: "Trucks", value: "trucks" },
-    { label: "Shapes", value: "shapes" },
+    { label: "Rodinhas", value: "rodas" },
+    { label: "Trucks", value: "truck" },
+    { label: "Shapes", value: "shape" },
   ]);
 
   async function CreatePubli() {
+    if (!nome || !descricao || !preco || !tipo) {
+      Alert.alert("Erro", "Preencha todos os campos antes de criar.");
+      return;
+    }
     try {
       await api.post("/baldutti/products", {
         title: nome,
         description: descricao,
         price: Number(preco),
         type: tipo,
-        image: imagemSelecionada,
+        image: imagemSelecionada ?? "https://via.placeholder.com/150",
         isFeatured: true,
       });
-    } catch (error) {
-      console.error("ERRO AO CRIAR NOVA PUBLICAÇÃO!!: ", error);
+      Alert.alert("Sucesso", "Publicação criada com sucesso!", [
+        { text: "OK", onPress: () => router.push("/gerenciar") },
+      ]);
+    } catch (error: any) {
+      console.error(
+        "ERRO AO CRIAR NOVA PUBLICAÇÃO!!: ",
+        error?.response?.data ?? error,
+      );
+      Alert.alert("Erro", "Não foi possível criar a publicação.");
     }
   }
   const router = useRouter();
@@ -61,17 +73,21 @@ export default function Criar() {
   const [imagemSelecionada, setImagemSelecionada] = useState<string | null>(
     null,
   );
+  const [imagemPreview, setImagemPreview] = useState<string | null>(null);
 
   const escolherImagem = async () => {
     const resultado = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: "images",
       allowsEditing: true,
       aspect: [4, 3],
-      quality: 1,
+      quality: 0.1,
+      base64: true,
     });
 
     if (!resultado.canceled) {
-      setImagemSelecionada(resultado.assets[0].uri);
+      setImagemPreview(resultado.assets[0].uri);
+      const base64Image = `data:image/jpeg;base64,${resultado.assets[0].base64}`;
+      setImagemSelecionada(base64Image);
     }
   };
 
@@ -108,9 +124,9 @@ export default function Criar() {
           style={stylesC.imagePlaceholder}
           onPress={escolherImagem}
         >
-          {imagemSelecionada ? (
+          {imagemPreview ? (
             <Image
-              source={{ uri: imagemSelecionada }}
+              source={{ uri: imagemPreview }}
               style={{ width: "100%", height: "100%", borderRadius: 8 }}
               resizeMode="cover"
             />
@@ -155,6 +171,7 @@ export default function Criar() {
           setItems={setItems}
           placeholder="Selecione o Tipo"
           style={stylesC.drop}
+          listMode="SCROLLVIEW"
         />
 
         <TouchableOpacity style={stylesC.btnCriar} onPress={CreatePubli}>

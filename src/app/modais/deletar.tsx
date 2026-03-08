@@ -1,7 +1,6 @@
-import { Feather } from "@expo/vector-icons";
 import React, { useState } from "react";
 import {
-    Image,
+    Alert,
     KeyboardAvoidingView,
     Platform,
     ScrollView,
@@ -12,11 +11,28 @@ import {
 } from "react-native";
 
 import { Navbar } from "@/src/components/Navbar";
-import { router } from "expo-router";
+import api from "@/src/services/api";
 import { styles } from "@/src/styles/deletar";
+import { router, useLocalSearchParams } from "expo-router";
 
 export default function Deletar() {
+  const { id } = useLocalSearchParams<{ id: string }>();
   const [confirmacao, setConfirmacao] = useState("");
+
+  async function deletePubli() {
+    if (confirmacao.toLowerCase() !== "confirmar") {
+      Alert.alert("Erro", 'Digite "confirmar" para prosseguir.');
+      return;
+    }
+    try {
+      await api.delete(`/baldutti/products/${id}`);
+      Alert.alert("Sucesso", "Publicação deletada com sucesso!");
+      router.replace("/gerenciar");
+    } catch (error) {
+      console.error("Erro ao deletar:", error);
+      Alert.alert("Erro", "Não foi possível deletar a publicação.");
+    }
+  }
 
   return (
     <KeyboardAvoidingView
@@ -43,11 +59,14 @@ export default function Deletar() {
             />
           </View>
 
-          <TouchableOpacity style={styles.deleteButton}>
+          <TouchableOpacity style={styles.deleteButton} onPress={deletePubli}>
             <Text style={styles.deleteButtonText}>Deletar</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.cancelButton} onPress={()=>router.push("/gerenciar")}>
+          <TouchableOpacity
+            style={styles.cancelButton}
+            onPress={() => router.replace("/gerenciar")}
+          >
             <Text style={styles.cancelButtonText}>Cancelar</Text>
           </TouchableOpacity>
         </View>

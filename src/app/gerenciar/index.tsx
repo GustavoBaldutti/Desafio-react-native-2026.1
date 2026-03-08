@@ -1,13 +1,12 @@
 import { Feather } from "@expo/vector-icons";
-import { useRouter } from "expo-router";
-import React, { useState } from "react";
+import { useFocusEffect, useRouter } from "expo-router";
+import React, { useCallback, useState } from "react";
 import { FlatList, Image, Text, TouchableOpacity, View } from "react-native";
 
-import { Navbar } from "@/src/components/Navbar";
 import Footer from "@/src/components/Footer";
+import { Navbar } from "@/src/components/Navbar";
 import api from "@/src/services/api";
 import { styles } from "@/src/styles/gerenciar";
-
 
 type Props = {
   id: number;
@@ -22,44 +21,89 @@ type Props = {
 };
 
 export default function Gerenciar() {
-
-   const [datas, setDatas] = useState<Props[]>([]);
+  const [datas, setDatas] = useState<Props[]>([]);
+  const router = useRouter();
 
   async function fetchDatas() {
     try {
-      const response = await api.get("/baldutti/categories");
-      setDatas(response.data);
-      console.log(response.data);
+      let page = 1;
+      let allProducts: Props[] = [];
+      let lastPage = 1;
+
+      do {
+        const response = await api.get(`/baldutti/products?page=${page}`);
+        allProducts = [...allProducts, ...response.data.products];
+        lastPage = response.data.last_page;
+        page++;
+      } while (page <= lastPage);
+
+      setDatas(allProducts);
     } catch (error) {
       console.error("ERRO AO BUSCAR DADOS!!: ", error);
     }
   }
-  const router = useRouter();
 
-  const renderItem = ({ item }: any) => (
+  useFocusEffect(
+    useCallback(() => {
+      fetchDatas();
+    }, []),
+  );
+
+  const isValidImageUri = (uri: string) =>
+    uri &&
+    (uri.startsWith("http://") ||
+      uri.startsWith("https://") ||
+      uri.startsWith("data:"));
+
+  const renderItem = ({ item }: { item: Props }) => (
     <View style={styles.card}>
-      <Image
-        source={item.imagem}
-        style={styles.productImage}
-        resizeMode="cover"
-      />
+      {isValidImageUri(item.image) ? (
+        <Image
+          source={{ uri: item.image }}
+          style={styles.productImage}
+          resizeMode="cover"
+        />
+      ) : (
+        <View
+          style={[
+            styles.productImage,
+            {
+              backgroundColor: "#E0E0E0",
+              justifyContent: "center",
+              alignItems: "center",
+            },
+          ]}
+        >
+          <Text style={{ color: "#999" }}>Sem imagem</Text>
+        </View>
+      )}
 
       <View style={styles.cardContent}>
-        <Text style={styles.productTitle}>{item.titulo}</Text>
-        <Text style={styles.productDesc}>{item.descricao}</Text>
-        <Text style={styles.productPrice}>{item.preco}</Text>
+        <Text style={styles.productTitle}>{item.title}</Text>
+        <Text style={styles.productDesc}>{item.description}</Text>
+        <Text style={styles.productPrice}>R$ {item.price}</Text>
 
         <View style={styles.buttonRow}>
           <TouchableOpacity
             style={styles.btnEditar}
-            onPress={() => router.push("/modais/editar")}
+            onPress={() =>
+              router.push({
+                pathname: "/modais/editar",
+                params: { id: item.id },
+              })
+            }
           >
             <Text style={styles.btnText}>Editar</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
             style={styles.btnExcluir}
-            onPress={() => router.push("/modais/deletar")}
+            onPress={() =>
+              router.push({
+                pathname: "/modais/deletar",
+                params: { id: item.id },
+              })
+            }
           >
             <Text style={styles.btnText}>Excluir</Text>
           </TouchableOpacity>
