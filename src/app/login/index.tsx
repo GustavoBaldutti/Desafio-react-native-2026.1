@@ -1,4 +1,5 @@
 import { AntDesign, MaterialIcons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import { Image, Text, TextInput, TouchableOpacity, View } from "react-native";
 import Logo from "../../assets/images/Logo.png";
@@ -8,11 +9,14 @@ import { styles } from "@/src/styles/login";
 
 export default function LoginView() {
   const [showPassword, setShowPassword] = useState(false);
-  const {login} = useAuth();
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
+  const { login } = useAuth();
+  const router = useRouter();
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.backButton }>
+      <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
         <AntDesign name="left-square" size={35} color="#4B2E60" />
       </TouchableOpacity>
 
@@ -27,12 +31,19 @@ export default function LoginView() {
             style={styles.input}
             keyboardType="email-address"
             autoCapitalize="none"
+            value={email}
+            onChangeText={setEmail}
           />
         </View>
 
         <View style={styles.boxInput}>
           <Text style={styles.titleInput}>SENHA</Text>
-          <TextInput style={styles.input} secureTextEntry={!showPassword} />
+          <TextInput
+            style={styles.input}
+            secureTextEntry={!showPassword}
+            value={senha}
+            onChangeText={setSenha}
+          />
           <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
             <MaterialIcons
               name={showPassword ? "visibility" : "visibility-off"}

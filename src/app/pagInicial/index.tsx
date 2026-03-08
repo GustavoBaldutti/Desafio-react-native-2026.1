@@ -24,18 +24,27 @@ export default function Index() {
 
   async function fetchDatas() {
     try {
-      const response = await api.get("/baldutti/products");
-      setDatas(response.data.products);
-      console.log(response.data);
+      let page = 1;
+      let allProducts: Props[] = [];
+      let lastPage = 1;
+
+      do {
+        const response = await api.get(`/baldutti/products?page=${page}`);
+        allProducts = [...allProducts, ...response.data.products];
+        lastPage = response.data.last_page;
+        page++;
+      } while (page <= lastPage);
+
+      setDatas(allProducts);
     } catch (error) {
       console.error("ERRO AO BUSCAR DADOS!!: ", error);
     }
   }
 
-  const skates = datas.filter((skate) => skate.type == "skateMontado");
-  const rodinhas = datas.filter((roda) => roda.type == "rodas");
-  const trucks = datas.filter((truck) => truck.type == "truck");
-  const shapes = datas.filter((shape) => shape.type == "shape");
+  const skates = datas.filter((item) => item.type === "skateMontado");
+  const rodinhas = datas.filter((item) => item.type === "rodas");
+  const trucks = datas.filter((item) => item.type === "truck");
+  const shapes = datas.filter((item) => item.type === "shape");
   console.log("skates", skates);
 
   useFocusEffect(
