@@ -3,6 +3,8 @@ import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
   container: {
     backgroundColor: "#A9A9A9",
+    zIndex: 10,
+    elevation: 10,
   },
   header: {
     backgroundColor: "#000000",
@@ -12,6 +14,8 @@ export const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingHorizontal: 40,
     paddingTop: 20,
+    zIndex: 10,
+    elevation: 10,
   },
   logoHeader: {
     width: 50,

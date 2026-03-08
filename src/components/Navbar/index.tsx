@@ -17,7 +17,13 @@ export function Navbar(data: navbarProps) {
     <View style={styles.container}>
       <View style={styles.header}>
         <Menu onClose={() => {}} menuPaddingTop={data.menuPaddingTop} />
-        <TouchableOpacity onPress={() => router.push("/")}>
+        <TouchableOpacity
+          onPress={() => {
+            if (router.canGoBack()) {
+              router.replace("/pagInicial");
+            }
+          }}
+        >
           <Image
             source={require("../../assets/images/Logo.png")}
             style={styles.logoHeader}
